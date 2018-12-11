@@ -24,7 +24,7 @@ namespace MissionSite.Controllers
         {
             String email = form["Email address"].ToString();
             String password = form["Password"].ToString();
-            
+            int id = 0;
 
             var currentUser = db.Database.SqlQuery<Users>(
             "Select * " +
@@ -42,8 +42,16 @@ namespace MissionSite.Controllers
 
             if (currentUser.Count() > 0)
             {
+                foreach(var user in db.Users)
+                {
+                    if (user.UserEmail == email)
+                    {
+                        id = user.UserID;
+                    }
+                }
+
                 FormsAuthentication.SetAuthCookie(email, rememberMe);
-                return RedirectToAction("Index", "Home", new { userlogin = email });
+                return RedirectToAction("Index", "Home", new { userlogin = email, id = id});
             }
             else
             {
@@ -65,8 +73,9 @@ namespace MissionSite.Controllers
                 db.Users.Add(users);
                 db.SaveChanges();
                 string email = users.UserEmail;
+                int id = users.UserID;
                 FormsAuthentication.SetAuthCookie(email, rememberMe);
-                return RedirectToAction("Index", "Home", new { userlogin = email });
+                return RedirectToAction("Index", "Home", new { userlogin = email, id = id });
             }
 
             return View(users);

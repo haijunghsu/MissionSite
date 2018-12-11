@@ -17,10 +17,11 @@ namespace MissionSite.Controllers
     {
         private MissionSiteContext db = new MissionSiteContext();
         public static int MissionIDPointer = 0;
-        public static int UserIDPointer = 1;
+        public static int UserIDPointer = 0;
 
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
+            UserIDPointer = id;
             return View();
         }
 
@@ -64,6 +65,7 @@ namespace MissionSite.Controllers
         public ActionResult AddAnswer(string answer, int QID)
         {
             db.MissionQuestions.Find(QID).MissionAnswer = answer;
+            db.MissionQuestions.Find(QID).UserID = UserIDPointer;
             db.SaveChanges();
             return RedirectToAction("MissionFAQ");
         }
