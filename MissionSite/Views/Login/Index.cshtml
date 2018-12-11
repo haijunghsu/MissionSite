@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+@using (Html.BeginForm("Index","Login", FormMethod.Post))
+{
+    <label for="inputEmail">Email Address</label>
+    @Html.TextBox("Email Address")
+    <br />
+    <label for="inputPassword">Password</label>
+    @Html.Password("Password")
+    <br />
+    <button type="submit">Login</button>
+}

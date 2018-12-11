@@ -1,0 +1,50 @@
+﻿@model MissionSite.Models.MissionQuestions
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MissionQuestions</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Missions.MissionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Missions.MissionName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Users.UserEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Users.UserEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MissionQuestion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MissionQuestion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MissionAnswer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MissionAnswer)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MissionQuestionID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,110 @@
+﻿@model IEnumerable<MissionSite.Models.MissionQuestions>
+@{
+    ViewBag.Title = "MissionFAQ";
+}
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Missions", "Home")">Missions</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewBag.mTitle Mission</li>
+    </ol>
+</nav>
+
+<!-- Main mission information -->
+<div class="jumbotron">
+    <h2>About the</h2>
+    <h1>@ViewBag.MissionInfo.MissionName Mission</h1>
+    <p>
+        <img src="@ViewBag.MissionInfo.MissionFlag" alt="Mission Flag" style="width:30%;align-content:center;" />
+    </p>
+    <p><b>Current Mission President:</b> @ViewBag.MissionInfo.MissionPresName</p>
+    <p><b>Mission Address:</b> @ViewBag.MissionInfo.MissionAddress</p>
+    <p><b>Language(s):</b> @ViewBag.MissionInfo.MissionLan</p>
+    <p><b>Climate:</b> @ViewBag.MissionInfo.MissionClimate</p>
+    <p><b>Dominant Religion(s):</b> @ViewBag.MissionInfo.DominantRel</p>
+</div>
+
+<!-- FAQs -->
+<div>
+    <h3>Mission FAQ</h3>
+
+    @{ int iCount = 0;}
+    @foreach (var item in ViewBag.Qs)
+    {
+        if (ViewBag.MissionInfo.MissionID == item.MissionID)
+        {
+            <button onclick="getDroppedText('@iCount.ToString()')" class="w3-btn w3-block w3-black w3-left-align">@item.MissionQuestion</button>
+            <div id="@iCount.ToString()" class="w3-container w3-hide">
+                <h4>@item.MissionAnswer</h4>
+                <p></p>
+                <form id="myDIV" action="/Home/AddAnswer" method="post" style="display:block;">
+                    <input type="text" name="answer" id="AnswerForm" placeholder="Write your answer here . ." />
+                    <input type="hidden" name="QID" value="@item.MissionQuestionID" />
+                    <input type="submit" name="Post" value="Post"/>
+                </form>
+                <br />
+            </div>
+            iCount++;
+        }
+
+    }
+</div>
+
+<br />
+<br />
+
+<!-- Comment box -->
+<div>
+    @{
+        if (ViewBag.MissionInfo.MissionName == "London England")
+        {
+            <form action="/Home/AddUKQ" method="post">
+                <input type="text" name="question" id="ContactForm" placeholder="Ask a new question . .">
+                <br />
+                <input type="submit" value="Post">
+            </form>
+        }
+        else if (ViewBag.MissionInfo.MissionName == "China Hong Kong")
+        {
+            <form action="/Home/AddHKQ" method="post">
+                <input type="text" name="question" id="ContactForm" placeholder="Ask a new question . .">
+                <br />
+                <input type="submit" value="Post">
+            </form>
+        }
+        else if (ViewBag.MissionInfo.MissionName == "Utah Ogden")
+        {
+            <form action="/Home/AddODQ" method="post">
+                <input type="text" name="question" id="ContactForm" placeholder="Ask a new question . .">
+                <br />
+                <input type="submit" value="Post">
+            </form>
+        };
+    }
+</div>
+
+
+<!-- JavaScript -->
+<script>
+    function getDroppedText(id) {
+        var x = document.getElementById(id);
+        if (x.className.indexOf("w3-show") === -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+
+    function showAnswerForm() {
+        var x = document.getElementById("myDIV");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
