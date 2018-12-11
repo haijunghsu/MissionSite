@@ -39,12 +39,19 @@
         {
             <button onclick="getDroppedText('@iCount.ToString()')" class="w3-btn w3-block w3-black w3-left-align">@item.MissionQuestion</button>
             <div id="@iCount.ToString()" class="w3-container w3-hide">
-                <h4>@item.MissionAnswer</h4>
+                @if (item.MissionAnswer == null)
+                {
+                    <h4>No Answer Yet</h4>
+                }
+                else
+                {
+                    <h4>@item.MissionAnswer</h4>
+                }
                 <p></p>
                 <form id="myDIV" action="/Home/AddAnswer" method="post" style="display:block;">
                     <input type="text" name="answer" id="AnswerForm" placeholder="Write your answer here . ." />
                     <input type="hidden" name="QID" value="@item.MissionQuestionID" />
-                    <input type="submit" name="Post" value="Post"/>
+                    <input type="submit" name="Post" value="Post" />
                 </form>
                 <br />
             </div>
@@ -59,32 +66,12 @@
 
 <!-- Comment box -->
 <div>
-    @{
-        if (ViewBag.MissionInfo.MissionName == "London England")
-        {
-            <form action="/Home/AddUKQ" method="post">
-                <input type="text" name="question" id="ContactForm" placeholder="Ask a new question . .">
-                <br />
-                <input type="submit" value="Post">
-            </form>
-        }
-        else if (ViewBag.MissionInfo.MissionName == "China Hong Kong")
-        {
-            <form action="/Home/AddHKQ" method="post">
-                <input type="text" name="question" id="ContactForm" placeholder="Ask a new question . .">
-                <br />
-                <input type="submit" value="Post">
-            </form>
-        }
-        else if (ViewBag.MissionInfo.MissionName == "Utah Ogden")
-        {
-            <form action="/Home/AddODQ" method="post">
-                <input type="text" name="question" id="ContactForm" placeholder="Ask a new question . .">
-                <br />
-                <input type="submit" value="Post">
-            </form>
-        };
-    }
+    <form action="/Home/AddQuestion" method="post">
+        <input type="text" name="question" id="ContactForm" placeholder="Ask a new question . .">
+        <input type="hidden" name="mID" value="@ViewBag.MissionInfo.MissionID" />
+        <br />
+        <input type="submit" value="Post">
+    </form>
 </div>
 
 

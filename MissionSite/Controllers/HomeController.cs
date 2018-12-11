@@ -17,10 +17,7 @@ namespace MissionSite.Controllers
     {
         private MissionSiteContext db = new MissionSiteContext();
         public static int MissionIDPointer = 0;
-        public static int UserIDPointer = 0;
-        public static Queue<string> UKQ = new Queue<string>();
-        public static Queue<string> HKQ = new Queue<string>();
-        public static Queue<string> ODQ = new Queue<string>();
+        public static int UserIDPointer = 1;
 
         public ActionResult Index()
         {
@@ -71,23 +68,15 @@ namespace MissionSite.Controllers
             return RedirectToAction("MissionFAQ");
         }
 
-        public ActionResult AddUKQ(string question)
+        public ActionResult AddQuestion(string question, int mID)
         {
-            UKQ.Enqueue(question);
-            return RedirectToAction("LondonEngland");
+            MissionQuestions newQ = new MissionQuestions();
+            newQ.MissionID = mID;
+            newQ.MissionQuestion = question;
+            newQ.UserID = UserIDPointer;
+            db.MissionQuestions.Add(newQ);
+            db.SaveChanges();
+            return RedirectToAction("MissionFAQ");
         }
-
-        public ActionResult AddHKQ(string question)
-        {
-            HKQ.Enqueue(question);
-            return RedirectToAction("ChinaHongKong");
-        }
-
-        public ActionResult AddODQ(string question)
-        {
-            ODQ.Enqueue(question);
-            return RedirectToAction("OgdenUtah");
-        }
-
     }
 }

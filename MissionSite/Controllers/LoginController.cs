@@ -50,5 +50,26 @@ namespace MissionSite.Controllers
                 return View();
             }
         }
+
+        public ActionResult Register()
+        { 
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register([Bind(Include = "UserID,UserEmail,UserPassword,UserFirstName,UserLastName")] Users users, bool rememberMe = false)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Users.Add(users);
+                db.SaveChanges();
+                string email = users.UserEmail;
+                FormsAuthentication.SetAuthCookie(email, rememberMe);
+                return RedirectToAction("Index", "Home", new { userlogin = email });
+            }
+
+            return View(users);
+        }
     }
 }
