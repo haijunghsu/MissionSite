@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*
+ Team 1-3: HaiJung Hsu, Tiara Johnson, Bailey Coleman, and Ethan Guinn
+ IS 403 Project 2 Description: This web solution contains a mission site 
+        where users with login credentials can view frequently asked 
+        questions about specific missions, post new questions, and answer 
+        questions posted by other users.
+ 12/11/2018
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -12,7 +21,6 @@ using MissionSite.Models;
 
 namespace MissionSite.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private MissionSiteContext db = new MissionSiteContext();
@@ -53,6 +61,7 @@ namespace MissionSite.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult MissionFAQ()
         {
             ViewBag.MissionInfo = db.Missions.Find(MissionIDPointer);
@@ -61,6 +70,7 @@ namespace MissionSite.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult AddAnswer(string answer, int QID)
         {
@@ -70,6 +80,7 @@ namespace MissionSite.Controllers
             return RedirectToAction("MissionFAQ");
         }
 
+        [Authorize]
         public ActionResult AddQuestion(string question, int mID)
         {
             MissionQuestions newQ = new MissionQuestions();
