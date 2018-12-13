@@ -13,8 +13,12 @@ namespace MissionSite.Models
     {
         [Key]
         public int UserID { get; set; }
+
         [DisplayName("Email")]
+        [DataType(DataType.EmailAddress)]
+        [Required(ErrorMessage = "Please enter a valid email address.")]
         public string UserEmail { get; set; }
+
         [DisplayName("Password")]
         public string UserPassword { get; set; }
         [DisplayName("First Name")]
