@@ -27,9 +27,8 @@ namespace MissionSite.Controllers
         public static int MissionIDPointer = 0;
         public static int UserIDPointer = 0;
 
-        public ActionResult Index(int id)
+        public ActionResult Index()
         {
-            UserIDPointer = id;
             return View();
         }
 
@@ -42,9 +41,10 @@ namespace MissionSite.Controllers
         { 
             return View();
         }
-
-        public ActionResult SelectMission()
+        [Authorize]
+        public ActionResult SelectMission(int id)
         {
+            UserIDPointer = id;
             ViewBag.MissionID = new SelectList(db.Missions, "MissionID", "MissionName");
             return View();
         }

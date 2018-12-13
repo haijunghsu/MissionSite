@@ -51,7 +51,7 @@ namespace MissionSite.Controllers
                 }
 
                 FormsAuthentication.SetAuthCookie(email, rememberMe);
-                return RedirectToAction("Index", "Home", new { userlogin = email, id = id});
+                return RedirectToAction("SelectMission", "Home", new { userlogin = email, id = id});
             }
             else
             {
