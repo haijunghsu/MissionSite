@@ -51,7 +51,7 @@ namespace MissionSite.Controllers
                 }
 
                 FormsAuthentication.SetAuthCookie(email, rememberMe);
-                return RedirectToAction("SelectMission", "Home", new { userlogin = email, id = id});
+                return RedirectToAction("MissionFAQ", "Home", new { userlogin = email, id = id});
             }
             else
             {
@@ -75,7 +75,7 @@ namespace MissionSite.Controllers
                 string email = users.UserEmail;
                 int id = users.UserID;
                 FormsAuthentication.SetAuthCookie(email, rememberMe);
-                return RedirectToAction("Index", "Home", new { userlogin = email, id = id });
+                return RedirectToAction("MissionFAQ", "Home", new { userlogin = email, id = id });
             }
 
             return View(users);

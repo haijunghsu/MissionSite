@@ -41,10 +41,9 @@ namespace MissionSite.Controllers
         { 
             return View();
         }
-        [Authorize]
-        public ActionResult SelectMission(int id)
+        
+        public ActionResult SelectMission()
         {
-            UserIDPointer = id;
             ViewBag.MissionID = new SelectList(db.Missions, "MissionID", "MissionName");
             return View();
         }
@@ -55,15 +54,21 @@ namespace MissionSite.Controllers
             if (ModelState.IsValid)
             {
                 MissionIDPointer = missionQuestions.MissionID;
-                return RedirectToAction("MissionFAQ");
+                return RedirectToAction("MissionFAQ", new { id = UserIDPointer});
             }
 
             return View();
         }
 
         [Authorize]
-        public ActionResult MissionFAQ()
+        public ActionResult MissionFAQ(int id)
         {
+            UserIDPointer = id;
+            //if user login first without selecting the mission, it will take user back to index
+            if(MissionIDPointer == 0)
+            {
+                return RedirectToAction("Index");
+            }
             ViewBag.MissionInfo = db.Missions.Find(MissionIDPointer);
             var missionQuestions = db.MissionQuestions.Include(m => m.Missions).Include(m => m.Users);
             ViewBag.Qs = missionQuestions;
@@ -77,7 +82,7 @@ namespace MissionSite.Controllers
             db.MissionQuestions.Find(QID).MissionAnswer = answer;
             db.MissionQuestions.Find(QID).UserID = UserIDPointer;
             db.SaveChanges();
-            return RedirectToAction("MissionFAQ");
+            return RedirectToAction("MissionFAQ", new { id = UserIDPointer });
         }
 
         [Authorize]
@@ -89,7 +94,7 @@ namespace MissionSite.Controllers
             newQ.UserID = UserIDPointer;
             db.MissionQuestions.Add(newQ);
             db.SaveChanges();
-            return RedirectToAction("MissionFAQ");
+            return RedirectToAction("MissionFAQ", new { id = UserIDPointer });
         }
     }
 }
